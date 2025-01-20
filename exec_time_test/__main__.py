@@ -1,22 +1,34 @@
 '''
+    exec-time-test is a software to get the current load of a linux system.
+
     Copyright (C) 2025  IoTmaxx GmbH
-    Author: Ralf Glaser <glaser@iotmaxx.de>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of exec-time-test.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    exec-time-test is free software: you can redistribute it and/or modify it under the terms of 
+    the version 3 of the GNU General Public License as published by the Free Software Foundation.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    exec-time-test is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+    PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
+    You should have received a copy of the GNU General Public License along with Foobar. If 
+    not, see <https://www.gnu.org/licenses/>. 
 '''
-from .exec_time_test import getSystemLoadInfo
+import json
+import sys
+import argparse
+from .load_info_collector import getLoadInfo
 
 if __name__ == "__main__":
-    getSystemLoadInfo()
+    parser = argparse.ArgumentParser(
+                    prog='python -m exec_time_test',
+                    description='get the current load of a linux system',
+                    epilog='Copyright (C) 2025 IoTmaxx GmbH',
+                    formatter_class=lambda prog: argparse.ArgumentDefaultsHelpFormatter(prog, max_help_position=37)
+    )
+    parser.add_argument('-i', '--iterations', type=int, default=1,  metavar='<num>', help='# of iterations')
+    parser.add_argument('-s', '--sleep', type=float, default=0.1, metavar='<s>', help='time(s) between iterations')
+
+    args = parser.parse_args()
+    print(json.dumps(getLoadInfo(iterations=args.iterations, sleep=args.sleep),indent=4))
