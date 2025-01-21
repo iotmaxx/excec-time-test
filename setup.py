@@ -1,7 +1,7 @@
 '''
     exec-time-test is a software to get the current load of a linux system.
 
-    Copyright (C) 2025  IoTmaxx GmbH
+    Copyright (C) 2025  IoTmaxx GmbH <info@iotmaxx.de>
 
     This file is part of exec-time-test.
 
